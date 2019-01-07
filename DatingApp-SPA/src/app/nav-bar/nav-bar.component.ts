@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-
   // ================================================
   // =              ATTRIBUTES SECTION              =
   // ================================================
@@ -20,17 +20,32 @@ export class NavBarComponent implements OnInit {
   // =             CONSTRUCTOR SECTION              =
   // ================================================
 
-  constructor() { }
+  constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // ================================================
   // =                EVENT SECTION                 =
   // ================================================
 
   public login() {
-    console.log(this.model.username);
-    console.log(this.model.password);
+    this.authService.login(this.model).subscribe(
+      next => {
+        console.log('>>>> Logged in successfully');
+      },
+      error => {
+        console.log('>>>> Failed to login');
+      }
+    );
+  }
+
+  public loggedIn() {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
+
+  public logout() {
+    localStorage.removeItem('token');
+    console.log('>>>> Logged Out');
   }
 }
