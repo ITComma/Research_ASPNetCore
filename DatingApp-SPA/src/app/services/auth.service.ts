@@ -30,4 +30,8 @@ export class AuthService {
       })
     );
   }
+
+  register(model: { username: string; password: string }) {
+    return this.http.post(this.baseUrl + 'register', model);
+  }
 }

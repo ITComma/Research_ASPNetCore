@@ -8,6 +8,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace DatingApp.API
 {
@@ -20,6 +21,8 @@ namespace DatingApp.API
 
     public static IWebHostBuilder CreateWebHostBuilder(string[] args)
     {
+      var assemblyName = typeof(Startup).GetTypeInfo().Assembly.FullName;
+
       return WebHost.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration((hostingContext, config) =>
             {
@@ -27,15 +30,15 @@ namespace DatingApp.API
               if (args.Length >= 1 && args[0] == "logix")
               {
                 System.Console.WriteLine("config logix");
-                config.AddJsonFile("appsettings.Logixtek.json", optional: true, reloadOnChange: true);
+                config.AddJsonFile("config.Logixtek.json", optional: true, reloadOnChange: true);
               }
               else
               {
                 System.Console.WriteLine("config mac");
-                config.AddJsonFile("appsettings.Mac.json", optional: true, reloadOnChange: true);
+                config.AddJsonFile("config.Mac.json", optional: true, reloadOnChange: true);
               }
             })
-        .UseStartup<Startup>();
+        .UseStartup(assemblyName);
     }
   }
 }

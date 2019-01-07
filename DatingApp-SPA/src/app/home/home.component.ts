@@ -13,8 +13,6 @@ export class HomeComponent implements OnInit {
 
   registerMode = false;
 
-  values: any;
-
   // ================================================
   // =             CONSTRUCTOR SECTION              =
   // ================================================
@@ -22,7 +20,6 @@ export class HomeComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.loadData();
   }
 
   // ================================================
@@ -35,16 +32,5 @@ export class HomeComponent implements OnInit {
 
   cancelRegisterMode(registerMode: boolean) {
     this.registerMode = registerMode;
-  }
-
-  private loadData() {
-    this.http.get('http://localhost:5000/api/values').subscribe(
-      response => {
-        this.values = response;
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
 }
