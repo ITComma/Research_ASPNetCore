@@ -26,7 +26,8 @@ using DatingApp.API.Data;
 
 // Utils Extension
 using DatingApp.API.Helpers;
-
+using Newtonsoft.Json;
+using AutoMapper;
 
 namespace DatingApp.API
 {
@@ -42,14 +43,33 @@ namespace DatingApp.API
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+
       services.AddDbContext<DataContext>(
           (x) =>
           {
-            x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            var connectionStringName = Configuration.GetSection("AppSettings:ConnectionStringName").Value;
+
+            if (connectionStringName == "logix")
+            {
+              x.UseSqlServer(Configuration.GetConnectionString("LogixMSSQLConnection"));
+            }
+            else
+            {
+              x.UseSqlServer(Configuration.GetConnectionString("MacMSSQLConnection"));
+            }
+
           }
       );
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+      services.AddMvc()
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+        .AddJsonOptions(opt =>
+        {
+          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
+
       services.AddCors();
+      services.AddAutoMapper();
       services.AddTransient<Seed>();
       services.AddScoped<IAuthRepository, AuthRepository>();
       services.AddScoped<IDatingRepository, DatingRepository>();
@@ -99,7 +119,11 @@ namespace DatingApp.API
       }
 
       // app.UseHttpsRedirection();
-      // seeder.SeedUsers();
+      var isSeed = Boolean.Parse(Configuration.GetSection("AppSettings:IsSeed").Value);
+      if (isSeed)
+      {
+        seeder.SeedUsers();
+      }
       app.UseCors(
         x => x.AllowAnyOrigin()
           .AllowAnyMethod()

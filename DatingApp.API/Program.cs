@@ -24,20 +24,20 @@ namespace DatingApp.API
       var assemblyName = typeof(Startup).GetTypeInfo().Assembly.FullName;
 
       return WebHost.CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-              config.SetBasePath(Directory.GetCurrentDirectory());
-              if (args.Length >= 1 && args[0] == "logix")
-              {
-                System.Console.WriteLine("config logix");
-                config.AddJsonFile("config.Logixtek.json", optional: true, reloadOnChange: true);
-              }
-              else
-              {
-                System.Console.WriteLine("config mac");
-                config.AddJsonFile("config.Mac.json", optional: true, reloadOnChange: true);
-              }
-            })
+        // .ConfigureAppConfiguration((hostingContext, config) =>
+        //     {
+        //       config.SetBasePath(Directory.GetCurrentDirectory());
+        //       if (args.Length >= 1 && args[0] == "logix")
+        //       {
+        //         System.Console.WriteLine("config logix");
+        //         config.AddJsonFile("config.Logixtek.json", optional: true, reloadOnChange: true);
+        //       }
+        //       else
+        //       {
+        //         System.Console.WriteLine("config mac");
+        //         config.AddJsonFile("config.Mac.json", optional: true, reloadOnChange: true);
+        //       }
+        //     })
         .UseStartup(assemblyName);
     }
   }
