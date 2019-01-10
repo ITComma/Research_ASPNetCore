@@ -49,15 +49,17 @@ export class AuthService {
   }
 
   decodeToken(token?: string): boolean {
+
+    if (!this.loggedIn()) {
+      return false;
+    }
+
     if (token) {
       this.decodedToken = this.jwtHelper.decodeToken(token);
       return true;
     }
-    const existedToken = localStorage.getItem('token');
-    if (existedToken == null) {
-      return false;
-    }
 
+    const existedToken = localStorage.getItem('token');
     this.decodedToken = this.jwtHelper.decodeToken(existedToken);
     return true;
   }
