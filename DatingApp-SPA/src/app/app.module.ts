@@ -13,7 +13,7 @@ import { MemberModule } from './modules/member/member.module';
 import { ListModule } from './modules/lists/list.module';
 
 // Vendors
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 
 // Components
@@ -38,6 +38,7 @@ export function tokenGetter() {
     HttpClientModule,
     FormsModule,
     BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     JwtModule.forRoot({
       config: {

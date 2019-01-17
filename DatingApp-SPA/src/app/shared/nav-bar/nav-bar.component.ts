@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { AlertifyService } from 'src/app/core/services/alertify.service';
 import { User } from 'src/app/core/models/user';
 
-
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -21,6 +20,7 @@ export class NavBarComponent implements OnInit {
   };
 
   currentUser: User;
+  currentUserPhotoUrl: string;
 
   // ================================================
   // =             CONSTRUCTOR SECTION              =
@@ -33,11 +33,19 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.currentUser.subscribe(
-      user => {
-        this.currentUser = user;
+    this.authService.currentUser.subscribe(user => {
+      if (user == null) {
+        return;
       }
-    );
+
+      this.currentUser = user;
+
+      if (user.photoUrl == null) {
+        this.currentUserPhotoUrl = '../../../assets/user-photo.png';
+      } else {
+        this.currentUserPhotoUrl = user.photoUrl;
+      }
+    });
   }
 
   // ================================================

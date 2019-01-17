@@ -20,6 +20,7 @@ export class MemberDetailComponent implements OnInit {
   // ================================================
 
   user: User;
+  userPhotoUrl: string;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
@@ -36,6 +37,9 @@ export class MemberDetailComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.user = data.user;
+      if (this.user.photoUrl == null) {
+        this.userPhotoUrl = '../../../../assets/user-photo.png';
+      }
     });
 
     this.galleryOptions = [

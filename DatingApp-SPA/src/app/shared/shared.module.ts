@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Vendors
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, BsDatepickerModule } from 'ngx-bootstrap';
 
 // Components
 import { NavBarComponent } from './nav-bar/nav-bar.component';
@@ -20,8 +20,10 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
 
-    BsDropdownModule
+    BsDropdownModule,
+    BsDatepickerModule
   ],
   providers: [
   ],

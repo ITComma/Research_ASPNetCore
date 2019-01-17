@@ -36,10 +36,12 @@ export class MemberEditComponent implements OnInit, DeactivableComponent {
     });
 
     this.authService.currentUser.subscribe(user => {
-      if (user != null) {
+      if (user == null) { return; }
+
+      if (user.photoUrl != null) {
         this.photoUrl = user.photoUrl;
       } else {
-        this.photoUrl = '../../assets/user-photo.png';
+        this.photoUrl = '../../../../assets/user-photo.png';
       }
     });
   }

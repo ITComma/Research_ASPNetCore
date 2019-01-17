@@ -51,8 +51,8 @@ export class AuthService {
     this.changeUserInfo(null);
   }
 
-  register(model: { username: string; password: string }) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(registUser: User) {
+    return this.http.post(this.baseUrl + 'register', registUser);
   }
 
   loggedIn() {
