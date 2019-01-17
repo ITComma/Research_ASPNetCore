@@ -15,6 +15,7 @@ import { ListModule } from './modules/lists/list.module';
 // Vendors
 import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 // Components
 import { AppComponent } from './app.component';
