@@ -8,6 +8,15 @@ import { AlertifyService } from '../services/alertify.service';
 
 @Injectable()
 export class MemberListResolver implements Resolve<User[]> {
+
+  // ================================================
+  // =              ATTRIBUTES SECTION              =
+  // ================================================
+
+  // all way reset the pageIndex to 1 when routing to MemberListComponent
+  pageIndex = 1;
+  pageSize = 5;
+
   // ================================================
   // =             CONSTRUCTOR SECTION              =
   // ================================================
@@ -24,7 +33,7 @@ export class MemberListResolver implements Resolve<User[]> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
     return this.userService
-      .getUsers()
+      .getUsers(this.pageIndex, this.pageSize)
       .pipe(
         catchError(error => {
           this.alertify.error('Problem retrieving data');

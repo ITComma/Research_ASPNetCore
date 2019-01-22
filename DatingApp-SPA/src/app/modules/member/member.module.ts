@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 // Vendors
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeAgoPipe } from 'time-ago-pipe';
@@ -37,7 +37,9 @@ import { memberRoutes } from './member.routes';
     FormsModule,
 
     BsDropdownModule,
+    PaginationModule,
     TabsModule,
+    ButtonsModule,
     NgxGalleryModule,
     FileUploadModule,
 
