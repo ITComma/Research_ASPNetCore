@@ -9,6 +9,8 @@ import { ListsComponent } from './modules/lists/lists.component';
 
 // Guards
 import { AuthGuard } from './core/guards/auth.guard';
+import { UserService } from './core/services/user.service';
+import { ListsResolver } from './core/resolvers/lists.resolver';
 
 
 
@@ -25,10 +27,6 @@ export const appRoutes: Routes = [
       {
         path: 'messages',
         component: MessagesComponent
-      },
-      {
-        path: 'lists',
-        component: ListsComponent
       }
     ]
   },

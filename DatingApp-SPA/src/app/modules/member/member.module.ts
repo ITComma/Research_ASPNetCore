@@ -46,6 +46,9 @@ import { memberRoutes } from './member.routes';
     RouterModule.forChild(memberRoutes),
   ],
   providers: [
+  ],
+  exports: [
+    MemberCardComponent
   ]
 })
 export class MemberModule {}
