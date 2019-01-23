@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using AutoMapper;
 
 namespace DatingApp.API.Controllers
 {
@@ -22,14 +23,16 @@ namespace DatingApp.API.Controllers
 
     private readonly IAuthRepository _repo;
     private readonly IConfiguration _config;
+    private readonly IMapper _mapper;
 
     // ==========================================
     // =          Constructors Section          =
     // ==========================================
 
-    public AuthController(IAuthRepository repo, IConfiguration config)
+    public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
     {
       _config = config;
+      _mapper = mapper;
       _repo = repo;
     }
 
@@ -49,10 +52,16 @@ namespace DatingApp.API.Controllers
       }
       else
       {
-        var userToCreate = new User { Username = userForRegisterDto.Username };
+        var userToCreate = _mapper.Map<User>(userForRegisterDto);
         var createdUser = await _repo.RegisterAsync(userToCreate, userForRegisterDto.Password);
 
-        return StatusCode(201);
+        var userToReturn = _mapper.Map<UserForDetailedDto>(createdUser);
+
+        return CreatedAtRoute(
+          "GetUser",
+          new { controller = "Users", id = createdUser.Id },
+          userToReturn
+        );
       }
     }
 
@@ -87,7 +96,13 @@ namespace DatingApp.API.Controllers
       var tokenHandler = new JwtSecurityTokenHandler();
       var token = tokenHandler.CreateToken(tokenDescriptor);
 
-      return Ok(new { token = tokenHandler.WriteToken(token) });
+      var user = _mapper.Map<UserForListDto>(userFromRepo);
+
+      return Ok(new
+      {
+        token = tokenHandler.WriteToken(token),
+        user
+      });
     }
   }
 }
