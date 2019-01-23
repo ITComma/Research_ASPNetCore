@@ -12,7 +12,6 @@ import { AlertifyService } from 'src/app/core/services/alertify.service';
   styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
-
   // ================================================
   // =              ATTRIBUTES SECTION              =
   // ================================================
@@ -20,7 +19,6 @@ export class ListsComponent implements OnInit {
   users: User[];
   pagination: Pagination;
   likesParam: string;
-
 
   // ================================================
   // =             CONSTRUCTOR SECTION              =
@@ -31,15 +29,13 @@ export class ListsComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private alertify: AlertifyService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.route.data.subscribe(
-      (data) => {
-        this.users = data['users'].result;
-        this.pagination = data['users'].pagination;
-      }
-    );
+    this.route.data.subscribe(data => {
+      this.users = data['users'].result;
+      this.pagination = data['users'].pagination;
+    });
 
     this.likesParam = 'Likers';
   }
@@ -48,11 +44,18 @@ export class ListsComponent implements OnInit {
   // =                EVENT SECTION                 =
   // ================================================
 
-  loadUsers(event: string) {
-    this.likesParam = event;
+  loadUsers(event?: string) {
+    if (event != null) {
+      this.likesParam = event;
+    }
 
     this.userService
-      .getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, null, this.likesParam)
+      .getUsers(
+        this.pagination.currentPage,
+        this.pagination.itemsPerPage,
+        null,
+        this.likesParam
+      )
       .subscribe(
         data => {
           this.users = data.result;
@@ -68,5 +71,4 @@ export class ListsComponent implements OnInit {
     this.pagination.currentPage = event.page;
     this.loadUsers();
   }
-
 }
