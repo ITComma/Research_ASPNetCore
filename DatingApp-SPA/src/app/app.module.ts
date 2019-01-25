@@ -10,7 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { ValueModule } from './modules/value/value.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { MemberModule } from './modules/member/member.module';
-import { ListModule } from './modules/lists/list.module';
+import { ListsModule } from './modules/lists/lists.module';
 
 // Vendors
 import { BsDropdownModule, TabsModule, BsDatepickerModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
@@ -58,7 +58,7 @@ export function tokenGetter() {
     ValueModule,
     MessagesModule,
     MemberModule,
-    ListModule
+    ListsModule
   ],
   providers: [
   ],

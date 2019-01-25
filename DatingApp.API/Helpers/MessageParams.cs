@@ -1,6 +1,6 @@
 namespace DatingApp.API.Helpers
 {
-  public class UserParams
+  public class MessageParams
   {
     private const int MaxPageSize = 50;
     public int PageIndex { get; set; } = 1;
@@ -13,16 +13,7 @@ namespace DatingApp.API.Helpers
     }
 
     public int UserId { get; set; }
-    public string Gender { get; set; }
 
-    public int MinAge { get; set; } = 18;
-
-    public int MaxAge { get; set; } = 99;
-
-    public string OrderBy { get; set; }
-
-    public bool Likees { get; set; }
-
-    public bool Likers { get; set; }
+    public string MessageContainer { get; set; } = "Unread";
   }
 }

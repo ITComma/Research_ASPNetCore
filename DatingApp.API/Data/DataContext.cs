@@ -18,6 +18,8 @@ namespace DatingApp.API.Data
 
     public DbSet<Like> Likes { get; set; }
 
+    public DbSet<Message> Messages { get; set; }
+
 
     // ================================================
     // =             CONSTRUCTOR SECTION              =
@@ -46,6 +48,18 @@ namespace DatingApp.API.Data
         .HasOne(u => u.Liker)
         .WithMany(u => u.Likees)
         .HasForeignKey(u => u.LikerId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+
+
+      builder.Entity<Message>()
+        .HasOne(u => u.Sender)
+        .WithMany(m => m.MessagesSent)
+        .OnDelete(DeleteBehavior.Restrict);
+
+      builder.Entity<Message>()
+        .HasOne(u => u.Recipient)
+        .WithMany(m => m.MessageReceived)
         .OnDelete(DeleteBehavior.Restrict);
     }
   }
