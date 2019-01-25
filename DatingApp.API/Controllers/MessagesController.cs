@@ -119,5 +119,60 @@ namespace DatingApp.API.Controllers
 
       throw new Exception("Creating The Message Fail On Server!");
     }
+
+    [HttpPost("{id}")]
+    public async Task<IActionResult> DeleteMessage(int userId, int id)
+    {
+      if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        return Unauthorized();
+
+      var messageFormRepo = await _repo.GetMessage(id);
+
+      if (messageFormRepo.SenderId == userId)
+      {
+        messageFormRepo.SenderDeleted = true;
+      }
+
+      if (messageFormRepo.RecipientId == userId)
+      {
+        messageFormRepo.RecipientDeleted = true;
+      }
+
+      if (messageFormRepo.SenderDeleted && messageFormRepo.RecipientDeleted)
+      {
+        _repo.Delete(messageFormRepo);
+      }
+
+      if (await _repo.SaveAll())
+      {
+        return NoContent();
+      }
+
+      throw new Exception("Error While Deleting Message");
+    }
+
+    [HttpPost("{id}/read")]
+    public async Task<IActionResult> MarkMessageAsRead(int userId, int id)
+    {
+      if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        return Unauthorized();
+
+      var message = await _repo.GetMessage(id);
+
+      if (message.RecipientId != userId)
+      {
+        return Unauthorized();
+      }
+
+      message.IsRead = true;
+      message.DateRead = DateTime.Now;
+
+      if (await _repo.SaveAll())
+      {
+        return NoContent();
+      }
+
+      throw new Exception("Error While Mark Read Message");
+    }
   }
 }

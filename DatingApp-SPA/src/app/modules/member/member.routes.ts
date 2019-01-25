@@ -29,7 +29,7 @@ export const memberRoutes: Routes = [
     }
   },
   {
-    path: 'members/edit',
+    path: 'member/edit',
     component: MemberEditComponent,
     resolve: {
       user: MemberEditResolver
