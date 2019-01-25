@@ -15,6 +15,7 @@ import { MemberEditResolver } from './resolvers/member-edit.resolver';
 // Guards
 import { PreventUnsavedChanges } from './guards/prevent-unsaved-changes.guard';
 import { AuthGuard } from './guards/auth.guard';
+import { MessagesResolver } from './resolvers/messages.resolver';
 
 
 @NgModule({
@@ -29,9 +30,11 @@ import { AuthGuard } from './guards/auth.guard';
     AlertifyService,
     ErrorInterceptorProvider,
     UserService,
+
     MemberDetailResolver,
     MemberListResolver,
-    MemberEditResolver
+    MemberEditResolver,
+    MessagesResolver
   ]
 })
 export class CoreModule {}

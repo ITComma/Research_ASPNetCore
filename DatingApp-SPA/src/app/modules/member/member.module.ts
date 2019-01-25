@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+// Sub Modules
+import { SharedModule } from 'src/app/shared/shared.module';
+
 // Vendors
 import { BsDropdownModule, TabsModule, PaginationModule, ButtonsModule } from 'ngx-bootstrap';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
-import { TimeAgoPipe } from 'time-ago-pipe';
 
 // Components
 import { MemberListComponent } from './member-list/member-list.component';
@@ -19,6 +21,7 @@ import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 
 // Routing
 import { memberRoutes } from './member.routes';
+import { MemberMessagesComponent } from './member-messages/member-messages.component';
 
 
 @NgModule({
@@ -27,9 +30,8 @@ import { memberRoutes } from './member.routes';
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent,
-
-    TimeAgoPipe
+    MemberMessagesComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,8 @@ import { memberRoutes } from './member.routes';
     FileUploadModule,
 
     RouterModule.forChild(memberRoutes),
+
+    SharedModule
   ],
   providers: [
   ],

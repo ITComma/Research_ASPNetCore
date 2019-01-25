@@ -4,8 +4,6 @@ import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { AlertifyService } from 'src/app/core/services/alertify.service';
 import { Pagination } from 'src/app/core/models/pagination';
-import { ThrowStmt } from '@angular/compiler';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-member-list',
@@ -53,9 +51,17 @@ export class MemberListComponent implements OnInit {
   // =                EVENT SECTION                 =
   // ================================================
 
-  loadUsers() {
+  loadUsers(orderBy?: string) {
+    if (orderBy != null) {
+      this.userParams.orderBy = orderBy;
+    }
+
     this.userService
-      .getUsers(this.pagination.currentPage, this.pagination.itemsPerPage, this.userParams)
+      .getUsers(
+        this.pagination.currentPage,
+        this.pagination.itemsPerPage,
+        this.userParams
+      )
       .subscribe(
         data => {
           this.users = data.result;

@@ -57,21 +57,17 @@
       <div class="btn-group float-right">
         <button
           type="button"
-          [(ngModel)]="userParams.orderBy"
-          (click)="loadUsers()"
-          name="orderBy"
+          (click)="loadUsers('lastActive')"
           class="btn btn-primary"
-          btnRadio="lastActive"
+          [ngClass]="{'btn-dark': userParams.orderBy == 'lastActive'}"
         >
           Last Active
         </button>
         <button
           type="button"
-          [(ngModel)]="userParams.orderBy"
-          (click)="loadUsers()"
-          name="orderBy"
+          (click)="loadUsers('created')"
           class="btn btn-primary"
-          btnRadio="created"
+          [ngClass]="{'btn-dark': userParams.orderBy == 'created'}"
         >
           Newest Members
         </button>

@@ -9,12 +9,15 @@ import { BsDropdownModule, BsDatepickerModule } from 'ngx-bootstrap';
 // Components
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { RegisterComponent } from './register/register.component';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 
 @NgModule({
   declarations: [
     NavBarComponent,
-    RegisterComponent
+    RegisterComponent,
+
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,8 @@ import { RegisterComponent } from './register/register.component';
   ],
   exports: [
     NavBarComponent,
-    RegisterComponent
+    RegisterComponent,
+    TimeAgoPipe
   ]
 })
 export class SharedModule {}

@@ -10,10 +10,16 @@
 <div class="container mt-3">
   <div class="row">
     <div class="btn-group">
-      <button class="btn btn-primary" (click)="loadUsers('Likers')">
+      <button class="btn btn-primary"
+        (click)="loadUsers('Likers')"
+        [ngClass]="{'btn-dark': likesParam == 'Likers'}"
+      >
         Members who like me
       </button>
-      <button class="btn btn-primary" (click)="loadUsers('Likees')">
+      <button class="btn btn-primary"
+        (click)="loadUsers('Likees')"
+        [ngClass]="{'btn-dark': likesParam == 'Likees'}"
+      >
         Members who I like
       </button>
     </div>
@@ -28,7 +34,7 @@
   </div>
 </div>
 
-<br>
+<br />
 
 <div class="d-flex justify-content-center">
   <pagination
