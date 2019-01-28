@@ -28,6 +28,7 @@ using DatingApp.API.Data;
 using DatingApp.API.Helpers;
 using Newtonsoft.Json;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DatingApp.API
 {
@@ -47,17 +48,48 @@ namespace DatingApp.API
       services.AddDbContext<DataContext>(
           (x) =>
           {
-            var connectionStringName = Configuration.GetSection("AppSettings:ConnectionStringName").Value;
+            x.UseMySql(Configuration.GetConnectionString("DefaultConnection"))
+              .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.IncludeIgnoredWarning));
+          }
+      );
 
-            if (connectionStringName == "logix")
-            {
-              x.UseSqlServer(Configuration.GetConnectionString("LogixMSSQLConnection"));
-            }
-            else
-            {
-              x.UseSqlServer(Configuration.GetConnectionString("MacMSSQLConnection"));
-            }
+      services.AddMvc()
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+        .AddJsonOptions(opt =>
+        {
+          opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
 
+      services.AddCors();
+      services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+      services.AddAutoMapper();
+      services.AddTransient<Seed>();
+      services.AddScoped<IAuthRepository, AuthRepository>();
+      services.AddScoped<IDatingRepository, DatingRepository>();
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(
+          options =>
+          {
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+              ValidateIssuerSigningKey = true,
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+              ValidateIssuer = false,
+              ValidateAudience = false
+            };
+          }
+        );
+
+      services.AddScoped<LogUserActivity>();
+    }
+
+    public void ConfigureMacDevelopmentServices(IServiceCollection services)
+    {
+
+      services.AddDbContext<DataContext>(
+          (x) =>
+          {
+            x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
           }
       );
 
@@ -133,7 +165,18 @@ namespace DatingApp.API
           .AllowAnyHeader()
       );
       app.UseAuthentication();
-      app.UseMvc();
+
+      // load static front-end app
+      app.UseDefaultFiles();
+      app.UseStaticFiles();
+
+      app.UseMvc(routes =>
+      {
+        routes.MapSpaFallbackRoute(
+          name: "spa-fallback",
+          defaults: new { controller = "Fallback", action = "Index" }
+        );
+      });
     }
   }
 }
