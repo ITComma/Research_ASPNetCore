@@ -1,54 +1,60 @@
 ﻿@page
 @model OdeToFood.Pages.Restaurants.ListModel
 @{
-   ViewData["Title"] = "List";
+   ViewData["Title"] = "Restaurants";
 }
 
-<h1>Restaurants</h1>
-<form method="get">
-   <div class="form-group">
-      <div class="input-group">
-         <input type="search" class="form-control" asp-for="SearchTerm" placeholder="search" />
-         <span class="input-group-btn">
-            <button class="btn btn-default">
-               <i class="glyphicon glyphicon-search"></i>
-            </button>
-         </span>
+
+<div class="container mt-2">
+   <div class="row">
+      <div class="col-6">
+         <h2>Restaurants</h2>
+      </div>
+      <div class="2">
+         <a asp-page="./Edit" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+            Add New
+         </a>
+      </div>
+      <div class="col-4">
+         <form method="get">
+            <div class="form-group">
+               <div class="input-group">
+                  <input type="search" class="form-control" asp-for="SearchTerm" placeholder="search" />
+                  <span class="input-group-append">
+                     <button class="btn btn-outline-secondary">
+                        <i class="fas fa-search"></i>
+                     </button>
+                  </span>
+               </div>
+            </div>
+         </form>
       </div>
    </div>
-</form>
-@if (Model.SearchTerm != null)
-{
+   <div class="row">
+      <div class="col-12">
+         @if (Model.SearchTerm != null)
+         {
 
-   <p>search for: <strong>@Model.SearchTerm</strong></p>
+            <span>search for: <strong>@Model.SearchTerm</strong></span>
+         }
+      </div>
+   </div>
+</div>
+
+
+<div class="container">
+   <div class="row">
+      @foreach (var restaurant in Model.Restaurants)
+      {
+         <div class="col-6 mb-3">
+            <partial name="_Summary" model="restaurant" />
+         </div>
+      }
+   </div>
+</div>
+
+
+@section footer {
+   <div>@Model.Message</div>
 }
-
-<table class="table">
-   <tr>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Cuisine</th>
-   </tr>
-   @foreach (var restaurant in Model.Restaurants)
-   {
-      <tr>
-         <td>@restaurant.Name</td>
-         <td>@restaurant.Location</td>
-         <td>@restaurant.Cuisine</td>
-         <td>
-            <a asp-page="./Detail" asp-route-restaurantId="@restaurant.Id" class="btn btn-lg">
-               <i class="glyphicon glyphicon-zoom-in"></i>
-            </a>
-         </td>
-         <td>
-            <a asp-page="./Edit" asp-route-restaurantId="@restaurant.Id" class="btn btn-lg">
-               <i class="glyphicon glyphicon-edit"></i>
-            </a>
-         </td>
-      </tr>
-   }
-</table>
-
-<a asp-page="./Edit" class="btn btn-primary">Add New</a>
-
-@Model.Message

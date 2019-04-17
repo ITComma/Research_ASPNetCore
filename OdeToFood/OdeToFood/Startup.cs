@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OdeToFood.Data;
+using OdeToFood.Data.Context;
 
 namespace OdeToFood
 {
@@ -33,13 +34,14 @@ namespace OdeToFood
             options.MinimumSameSitePolicy = SameSiteMode.None;
          });
 
+         // Register Database Context
          services.AddDbContext<OdeToFoodDbContext>(options =>
          {
             options.UseSqlServer(Configuration.GetConnectionString("OdeToFoodDb"));
          });
 
          // Register Data Access Services
-         services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+         services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
 
          services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

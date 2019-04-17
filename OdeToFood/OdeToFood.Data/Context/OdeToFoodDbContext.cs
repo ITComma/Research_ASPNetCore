@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OdeToFood.Data
+namespace OdeToFood.Data.Context
 {
    public class OdeToFoodDbContext : DbContext
    {
