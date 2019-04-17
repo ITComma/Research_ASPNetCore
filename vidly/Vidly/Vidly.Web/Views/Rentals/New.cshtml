@@ -1,0 +1,131 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "New Rental Form";
+}
+
+<h2>New Rental Form</h2>
+
+<form id="newRental">
+    <div class="form-group">
+        <label for="customer">Customer</label>
+        <div class="tt-container">
+            <input type="text" data-rule-validCustomer="true" required class="form-control" id="customer" value="">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="movie">Movie</label>
+        <div class="tt-container">
+            <input type="text" data-rule-validMovieList="true" class="form-control" id="movie" value="">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col sm-4">
+            <ul id="movies" class="list-group">
+                <li class="list-group-item active">Selected Movies</li>
+            </ul>
+        </div>
+    </div>
+
+    <button class="btn btn-primary mt-3">Submit</button>
+</form>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            var vm = {
+                customerId: null,
+                movieIds: []
+            };
+
+            var customers = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/customers?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            var movies = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/movies?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#customer')
+                .typeahead({
+                    minLength: 3,
+                    highlight: true
+                }, {
+                        name: 'customers',
+                        display: 'name',
+                        source: customers
+                    })
+                .on("typeahead:select", function (e, customer) {
+                    vm.customerId = customer.id;
+                });
+
+            $('#movie')
+                .typeahead({
+                    minLength: 3,
+                    highlight: true
+                },
+                    {
+                        name: 'movies',
+                        display: 'name',
+                        source: movies
+                    })
+                .on("typeahead:select", function (e, movie) {
+                    vm.movieIds.push(movie.id);
+
+                    $("#movies").append("<li class='list-group-item'>" + movie.name + "</li>");
+                    $("#movie").typeahead("val", "");
+                });
+
+
+            $.validator.addMethod("validCustomer", function() {
+                return vm.customerId && vm.customerId !== 0;
+            }, "Please select a valid customer");
+
+
+            $.validator.addMethod("validMovieList", function() {
+                return vm.movieIds.length > 0;
+            }, "Please select at least 1 movie");
+
+
+            var validator = $("#newRental").validate({
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: "/api/newRentals",
+                        method: "post",
+                        data: vm
+                    })
+                        .done(function () {
+                            toastr.success("Rentals successfully recorded.");
+
+                            $("#customer").typeahead("val", "");
+                            $("#movie").typeahead("val", "");
+                            $("#movies").empty();
+
+                            vm = { customerId: null, movieIds: [] }
+
+                            validator.resetForm();
+                        })
+                        .fail(function () {
+                            toastr.error("Something unexpected happened.");
+                        });
+
+                    return false;
+                }
+            });
+        });
+    </script>
+}

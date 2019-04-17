@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1884BFC3-00BF-466A-87C6-2AD1B0D19848}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Vidly.Data</RootNamespace>
+    <AssemblyName>Vidly.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.2\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Connections\SingleConnection.cs" />
+    <Compile Include="Migrations\201810190753399_InitData.cs" />
+    <Compile Include="Migrations\201810190753399_InitData.Designer.cs">
+      <DependentUpon>201810190753399_InitData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810190920441_UpdateCustomer.cs" />
+    <Compile Include="Migrations\201810190920441_UpdateCustomer.Designer.cs">
+      <DependentUpon>201810190920441_UpdateCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810190925218_AddMemberShipType.cs" />
+    <Compile Include="Migrations\201810190925218_AddMemberShipType.Designer.cs">
+      <DependentUpon>201810190925218_AddMemberShipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810190934221_ApplyAnnotationToCustomerAndMovieName.cs" />
+    <Compile Include="Migrations\201810190934221_ApplyAnnotationToCustomerAndMovieName.Designer.cs">
+      <DependentUpon>201810190934221_ApplyAnnotationToCustomerAndMovieName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810190942323_PopulateMembershipType.cs" />
+    <Compile Include="Migrations\201810190942323_PopulateMembershipType.Designer.cs">
+      <DependentUpon>201810190942323_PopulateMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810200626346_UpdateMembershipTypeName_SeedData.cs" />
+    <Compile Include="Migrations\201810200626346_UpdateMembershipTypeName_SeedData.Designer.cs">
+      <DependentUpon>201810200626346_UpdateMembershipTypeName_SeedData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810200644273_PopulateCustomer.cs" />
+    <Compile Include="Migrations\201810200644273_PopulateCustomer.Designer.cs">
+      <DependentUpon>201810200644273_PopulateCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810200701423_UpdateCustomerDayOfBirth.cs" />
+    <Compile Include="Migrations\201810200701423_UpdateCustomerDayOfBirth.Designer.cs">
+      <DependentUpon>201810200701423_UpdateCustomerDayOfBirth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810200737432_AddGenre_UpdateMovie_PopulateGenreAndMovie.cs" />
+    <Compile Include="Migrations\201810200737432_AddGenre_UpdateMovie_PopulateGenreAndMovie.Designer.cs">
+      <DependentUpon>201810200737432_AddGenre_UpdateMovie_PopulateGenreAndMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810230407270_UpdateCustomerIsSubscribeToNewsletter.cs" />
+    <Compile Include="Migrations\201810230407270_UpdateCustomerIsSubscribeToNewsletter.Designer.cs">
+      <DependentUpon>201810230407270_UpdateCustomerIsSubscribeToNewsletter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810260443195_InitIdentityContext.cs" />
+    <Compile Include="Migrations\201810260443195_InitIdentityContext.Designer.cs">
+      <DependentUpon>201810260443195_InitIdentityContext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810270338223_UpdateApplicationUserDrivingLicense.cs" />
+    <Compile Include="Migrations\201810270338223_UpdateApplicationUserDrivingLicense.Designer.cs">
+      <DependentUpon>201810270338223_UpdateApplicationUserDrivingLicense.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810280446535_AddRental.cs" />
+    <Compile Include="Migrations\201810280446535_AddRental.Designer.cs">
+      <DependentUpon>201810280446535_AddRental.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810290349312_UpdateMovieNumberAvailable.cs" />
+    <Compile Include="Migrations\201810290349312_UpdateMovieNumberAvailable.Designer.cs">
+      <DependentUpon>201810290349312_UpdateMovieNumberAvailable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810290723169_SeedMovieNumberAvailable.cs" />
+    <Compile Include="Migrations\201810290723169_SeedMovieNumberAvailable.Designer.cs">
+      <DependentUpon>201810290723169_SeedMovieNumberAvailable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Auth\IdentityModels.cs" />
+    <Compile Include="Models\Auth\RoleName.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\MembershipType.cs" />
+    <Compile Include="Models\Min18YearsOldIfAMember.cs" />
+    <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\Rental.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810190753399_InitData.resx">
+      <DependentUpon>201810190753399_InitData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810190920441_UpdateCustomer.resx">
+      <DependentUpon>201810190920441_UpdateCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810190925218_AddMemberShipType.resx">
+      <DependentUpon>201810190925218_AddMemberShipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810190934221_ApplyAnnotationToCustomerAndMovieName.resx">
+      <DependentUpon>201810190934221_ApplyAnnotationToCustomerAndMovieName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810190942323_PopulateMembershipType.resx">
+      <DependentUpon>201810190942323_PopulateMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810200626346_UpdateMembershipTypeName_SeedData.resx">
+      <DependentUpon>201810200626346_UpdateMembershipTypeName_SeedData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810200644273_PopulateCustomer.resx">
+      <DependentUpon>201810200644273_PopulateCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810200701423_UpdateCustomerDayOfBirth.resx">
+      <DependentUpon>201810200701423_UpdateCustomerDayOfBirth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810200737432_AddGenre_UpdateMovie_PopulateGenreAndMovie.resx">
+      <DependentUpon>201810200737432_AddGenre_UpdateMovie_PopulateGenreAndMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810230407270_UpdateCustomerIsSubscribeToNewsletter.resx">
+      <DependentUpon>201810230407270_UpdateCustomerIsSubscribeToNewsletter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810260443195_InitIdentityContext.resx">
+      <DependentUpon>201810260443195_InitIdentityContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810270338223_UpdateApplicationUserDrivingLicense.resx">
+      <DependentUpon>201810270338223_UpdateApplicationUserDrivingLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810280446535_AddRental.resx">
+      <DependentUpon>201810280446535_AddRental.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290349312_UpdateMovieNumberAvailable.resx">
+      <DependentUpon>201810290349312_UpdateMovieNumberAvailable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810290723169_SeedMovieNumberAvailable.resx">
+      <DependentUpon>201810290723169_SeedMovieNumberAvailable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

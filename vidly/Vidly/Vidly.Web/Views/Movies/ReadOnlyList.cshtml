@@ -1,0 +1,82 @@
+﻿@model List<Vidly.Data.Models.Movie>
+@{
+    ViewBag.Title = "Movies";
+}
+
+
+<h1>Movies</h1>
+
+
+@*@if (Model.Count == 0)
+    {
+        <div class="alert alert-warning">We don't have any movies yet.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Movie</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var movie in Model)
+                {
+                    <tr>
+                        <td>@movie.Id</td>
+                        <td>@Html.ActionLink(movie.Name, "Details/" + movie.Id, "Movies")</td>
+                        <td>@movie.Genre.Name</td>
+                        <td>@Html.ActionLink("Edit", "Edit", "Movies", new { id = movie.Id }, new { @class = "btn btn-warning" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }*@
+
+
+
+<table id="movies" class="table table-bordered table-dark table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Movie</th>
+            <th scope="col">Genre</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            let table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "id"
+                    },
+                    {
+                        data: "name",
+                        render: function (data, type, movie) {
+                            return "<a href='/movie/details/" + movie.id + "'>" + movie.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "genre.name",
+                    }
+                ]
+            });
+        });
+    </script>
+}
+
+
