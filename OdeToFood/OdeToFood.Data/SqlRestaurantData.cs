@@ -56,6 +56,11 @@ namespace OdeToFood.Data
             .OrderBy(r => r.Name);
       }
 
+      public int GetCountOfRestaurants()
+      {
+         return _context.Restaurants.Count();
+      }
+
       public Restaurant Update(Restaurant updatedRestaurant)
       {
          var entity = _context.Attach(updatedRestaurant);

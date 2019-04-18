@@ -305,3 +305,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# ASP.NET Core
+appsettings.json
+**/appsettings.development.json
+**/appsettings.staging.json
+**/appsettings.production.json
