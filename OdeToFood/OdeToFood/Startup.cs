@@ -34,6 +34,9 @@ namespace OdeToFood
             options.MinimumSameSitePolicy = SameSiteMode.None;
          });
 
+         // Configure App Settings
+         services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
          // Register Database Context
          services.AddDbContext<OdeToFoodDbContext>(options =>
          {
@@ -42,6 +45,7 @@ namespace OdeToFood
 
          // Register Data Access Services
          services.AddScoped<IRestaurantData, SqlRestaurantData>();
+         // services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
 
 
          services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -60,11 +64,29 @@ namespace OdeToFood
             app.UseHsts();
          }
 
+         app.Use(SayHelloMiddleware);
+
          app.UseHttpsRedirection();
          app.UseStaticFiles();
+         app.UseNodeModules(env);
          app.UseCookiePolicy();
 
          app.UseMvc();
+      }
+
+      private RequestDelegate SayHelloMiddleware(RequestDelegate next)
+      {
+         return async ctx =>
+         {
+            if (ctx.Request.Path.StartsWithSegments("/hello"))
+            {
+               await ctx.Response.WriteAsync("Hello, World!");
+            }
+            else
+            {
+               await next(ctx);
+            }
+         };
       }
    }
 }

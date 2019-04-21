@@ -9,7 +9,7 @@ using OdeToFood.Data.Context;
 namespace OdeToFood.Data.Migrations
 {
     [DbContext(typeof(OdeToFoodDbContext))]
-    [Migration("20190418052909_InitDatabase")]
+    [Migration("20190420051831_InitDatabase")]
     partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
