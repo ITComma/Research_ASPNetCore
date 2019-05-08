@@ -1,0 +1,52 @@
+@model Tuple<TalkViewModel, bool>
+@{
+  var talk = Model.Item1;
+  var suppress = Model.Item2;
+}
+<div class="col-md-12 wow fadeInUp">
+  <div class="panel panel-danger">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pull-right text-muted lead">
+            @if (!User.Identity.IsAuthenticated)
+            { <span class="text-sm text-muted">(Login to save favorite sessions)</span> }
+            <span class="voteStar @(talk.Favorite ? "voted" : "")" data-id="@talk.Id"><i class="fa fa-star"></i></span>
+          </div>
+          <h3 class="text-left">@talk.Title</h3>
+        </div>
+      </div>
+      @if (!suppress)
+      {
+        <div class="pull-right" style="width: 200px;">
+          <a asp-controller="Root" asp-action="Speaker" asp-route-id="@(talk.Speaker.Name.Replace(" ", "-"))"><img src="@talk.Speaker.ImageUrl" alt="@talk.Speaker.Name" class="speaker-image" onerror='this.src = "/img/no-image-available.jpg"'  /></a>
+          <p class="text-center"><a asp-controller="Root" asp-action="Speaker" asp-route-id="@(talk.Speaker.Name.Replace(" ", "-"))">@talk.Speaker.Name</a></p>
+        </div>
+      }
+      <div>
+        <p>@Html.Raw(talk.Abstract.Replace("<br/>", ""))</p>
+      </div>
+      <dl class="dl-horizontal text-left pull-left">
+        <dt>Level</dt>
+        <dd>@talk.Level</dd>
+        <dt>Category</dt>
+        <dd>@talk.Category</dd>
+        @if (talk.Room != null)
+        {
+          <dt>Room</dt>
+          <dd><a href="/img/@(this.GetEventInfo().Moniker)/maps/@(talk.Room[1] == '1' ? "1stFloor" : "2ndFloor").png" target="_blank">@talk.Room</a></dd>
+        }
+        @if (talk.Time != DateTime.MinValue)
+        {
+          <dt>Time</dt>
+          <dd>@(talk.Time == DateTime.MinValue ? "" : talk.Time.ToShortTimeString())</dd>
+        }
+        @*@if (!string.IsNullOrWhiteSpace(talk.Track))
+        {
+          <dt>Track</dt>
+          <dd>@talk.Track</dd>
+        }*@
+      </dl>
+    </div>
+  </div>
+</div>
